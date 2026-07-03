@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function IotDashboardPage() {
   return (
-    <main className="flex-1 px-6 py-10 sm:py-14">
+    <main id="main" className="flex-1 px-6 py-10 sm:py-14">
       <div className="mx-auto max-w-6xl space-y-12">
         <Dashboard />
         <CaseStudy />

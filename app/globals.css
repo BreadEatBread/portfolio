@@ -41,6 +41,36 @@ body {
   color: var(--foreground);
 }
 
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  z-index: 100;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: transform 180ms ease-out;
+}
+
+.skip-link:focus-visible {
+  transform: translate(-50%, 8px);
+  outline: none;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -54,4 +84,17 @@ body {
 
 .animate-fade-up {
   animation: fadeInUp 0.7s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

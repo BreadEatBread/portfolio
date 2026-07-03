@@ -43,7 +43,11 @@ export function EventLog({ events }: Props) {
           {events.length} events
         </p>
       </div>
-      <ul className="divide-y divide-border max-h-[420px] overflow-y-auto">
+      <ul
+        aria-live="polite"
+        aria-label="최근 이벤트 스트림"
+        className="divide-y divide-border max-h-[420px] overflow-y-auto"
+      >
         {events.length === 0 && (
           <li className="px-4 py-6 text-center text-xs text-muted">
             이벤트가 아직 없습니다.

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ModbusPlaygroundPage() {
   return (
-    <main className="flex-1 px-6 py-10 sm:py-14">
+    <main id="main" className="flex-1 px-6 py-10 sm:py-14">
       <div className="mx-auto max-w-5xl space-y-14">
         <Playground />
         <ModbusCaseStudy />
