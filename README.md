@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 김정웅 · Portfolio
 
-## Getting Started
+3년차 풀스택 개발자 김정웅의 개인 포트폴리오 사이트.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router, Turbopack)
+- TypeScript
+- Tailwind CSS v4
+- Pretendard (한글 웹폰트, CDN)
+
+## 시작하기
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # 개발 서버 (http://localhost:3000)
+npm run build    # 프로덕션 빌드
+npm run start    # 프로덕션 서버
+npm run lint     # 린트
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 콘텐츠 수정하기
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+거의 모든 텍스트는 한 파일에 모여 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `lib/data.ts` — 이름, 소개, 스킬, 경력, 연락처
+- `app/layout.tsx` — 페이지 타이틀 / OG 메타데이터
+- `app/globals.css` — 색상 토큰 (`--background`, `--foreground`, `--muted` 등)
 
-## Learn More
+섹션 순서나 구성을 바꾸려면 `app/page.tsx`를 편집하세요.
 
-To learn more about Next.js, take a look at the following resources:
+## 구조
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+  layout.tsx        루트 레이아웃, 폰트, 메타
+  page.tsx          모든 섹션 조합
+  globals.css       Tailwind + 색상 토큰
+components/
+  Nav.tsx           상단 고정 네비게이션
+  Hero.tsx          첫 화면
+  Section.tsx       섹션 공용 레이아웃
+  About.tsx         소개
+  Skills.tsx        기술 스택
+  Experience.tsx    경력 사항
+  Contact.tsx       연락처
+  Footer.tsx        하단
+lib/
+  data.ts           사이트 콘텐츠 (수정은 여기)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 배포
 
-## Deploy on Vercel
+Vercel에 GitHub 저장소를 연결하면 별도 설정 없이 배포됩니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# 또는 CLI로
+npx vercel
+```
