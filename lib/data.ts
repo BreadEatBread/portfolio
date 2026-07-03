@@ -199,6 +199,16 @@ export const projects: ShowcaseProject[] = [
     href: "/projects/iot-dashboard",
     status: "live",
   },
+  {
+    slug: "modbus-playground",
+    title: "Modbus Playground — 프레임 조립·파싱 도구",
+    role: "Tool · Modbus RTU",
+    summary:
+      "요청 프레임을 필드별로 조립·파싱하고 CRC-16 을 재계산해 눈으로 검증하는 브라우저 도구. ESP32 게이트웨이 개발·시리얼 디버깅 도중 스펙 확인 시간을 줄이려고 만들었습니다.",
+    stack: ["Next.js", "TypeScript", "Modbus RTU", "CRC-16"],
+    href: "/projects/modbus-playground",
+    status: "live",
+  },
 ];
 
 export const nav = [
