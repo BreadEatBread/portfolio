@@ -11,7 +11,7 @@ export const profile = {
     "조직도, 권한, 전자결재, 게시판, 그리드, 이벤트 버스 등 성격이 다른 화면과 기능을 넓게 경험했고, 기획·설계·개발·검증·유지보수 전 과정에 참여합니다.",
   ],
   email: "woong4252@gmail.com",
-  github: "",
+  github: "https://github.com/BreadEatBread/portfolio",
   linkedin: "",
   location: "Seoul, Korea",
 };

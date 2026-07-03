@@ -1,13 +1,29 @@
 import { profile } from "@/lib/data";
 import { Section } from "./Section";
 
+function stripProtocol(url: string) {
+  return url.replace(/^https?:\/\//, "");
+}
+
 const links = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
   ...(profile.github
-    ? [{ label: "GitHub", value: "github.com", href: profile.github }]
+    ? [
+        {
+          label: "GitHub",
+          value: stripProtocol(profile.github),
+          href: profile.github,
+        },
+      ]
     : []),
   ...(profile.linkedin
-    ? [{ label: "LinkedIn", value: "linkedin.com", href: profile.linkedin }]
+    ? [
+        {
+          label: "LinkedIn",
+          value: stripProtocol(profile.linkedin),
+          href: profile.linkedin,
+        },
+      ]
     : []),
 ];
 
