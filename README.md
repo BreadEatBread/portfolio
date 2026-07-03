@@ -2,6 +2,8 @@
 
 3년차 풀스택 개발자 김정웅의 개인 포트폴리오 사이트.
 
+**Live**: [woong4252.vercel.app](https://woong4252.vercel.app)  ·  **Case study**: [Factory Live IoT 대시보드](https://woong4252.vercel.app/projects/iot-dashboard)
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack)
