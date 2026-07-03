@@ -72,10 +72,10 @@ export default function EventBusRefactorPage() {
       <CaseStudyBlock eyebrow="04 · Try it" title="라이브 데모">
         <p>
           아래는 이벤트 버스 패턴을 <strong className="text-foreground font-medium">
-          재구현한 최소 데모
+          최소 형태로 재구현한 데모
           </strong>
-          입니다. 회사 코드는 사용하지 않았고, 3개 "탭" 이 하나의 공통
-          bus 로 연결돼 있다고 상상하시면 됩니다.
+          입니다. 3개 「탭」 이 하나의 공통 bus 로 연결돼 있다고 상상하시면
+          됩니다.
         </p>
         <p>
           아무 탭에서든 <em>"품목 A 수정"</em> 을 누르면 서버 상태가
