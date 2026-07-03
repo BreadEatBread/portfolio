@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-type Item = { id: number; name: string; ts: number };
+type Item = { id: number; name: string; base: string; ts: number };
 
 const seed: Item[] = [
-  { id: 1, name: "품목 A", ts: 0 },
-  { id: 2, name: "품목 B", ts: 0 },
-  { id: 3, name: "품목 C", ts: 0 },
+  { id: 1, name: "품목 A", base: "품목 A", ts: 0 },
+  { id: 2, name: "품목 B", base: "품목 B", ts: 0 },
+  { id: 3, name: "품목 C", base: "품목 C", ts: 0 },
 ];
 
 function fmtTs(ts: number) {
@@ -27,6 +27,9 @@ export function EventBusDemo() {
   const [busOn, setBusOn] = useState(true);
   const [log, setLog] = useState<LogEntry[]>([]);
   const [version, setVersion] = useState(1);
+  const [targetIdx, setTargetIdx] = useState(0);
+
+  const nextTarget = server[targetIdx];
 
   function pushLog(scope: LogEntry["scope"], text: string) {
     setLog((prev) => [
@@ -36,15 +39,17 @@ export function EventBusDemo() {
   }
 
   function mutate(tabId: "A" | "B" | "C") {
+    const target = server[targetIdx];
     const next: Item[] = server.map((it) =>
-      it.id === 1
-        ? { ...it, name: `품목 A (v${version + 1})`, ts: Date.now() }
+      it.id === target.id
+        ? { ...it, name: `${it.base} (v${version + 1})`, ts: Date.now() }
         : it,
     );
     setServer(next);
     setVersion((v) => v + 1);
+    setTargetIdx((i) => (i + 1) % server.length);
 
-    pushLog("http", `Tab ${tabId} → PUT /api/items/1 · name 변경`);
+    pushLog("http", `Tab ${tabId} → PUT /api/items/${target.id} · ${target.base} 변경`);
 
     setSnapshots((prev) => ({ ...prev, [tabId]: next }));
 
@@ -68,6 +73,7 @@ export function EventBusDemo() {
     setServer(seed);
     setSnapshots({ A: seed, B: seed, C: seed });
     setVersion(1);
+    setTargetIdx(0);
     setLog([]);
   }
 
@@ -112,6 +118,7 @@ export function EventBusDemo() {
             label={`Tab ${tabId}`}
             items={snapshots[tabId]}
             stale={JSON.stringify(snapshots[tabId]) !== JSON.stringify(server)}
+            nextLabel={`${nextTarget.base} 수정`}
             onMutate={() => mutate(tabId)}
           />
         ))}
@@ -122,9 +129,10 @@ export function EventBusDemo() {
       <p className="text-xs text-muted leading-relaxed">
         <span className="text-foreground">읽는 법</span> —{" "}
         <span className="text-amber-300">STALE</span> 뱃지는 그 탭의 스냅샷이
-        서버 최신본과 다르다는 뜻. 이벤트 버스를 끈 상태에서 &quot;품목 A 수정&quot;
-        을 눌러 보세요. 옆 탭들이 그대로 남아 있습니다. 버스를 다시 켜면 다음
-        수정부터 옆 탭들이 자동으로 최신 스냅샷을 받아옵니다.
+        서버 최신본과 다르다는 뜻. 버튼은 눌릴 때마다 다른 품목(A → B → C → A ...)
+        을 수정합니다. 이벤트 버스를 끈 상태에서 아무 탭이나 눌러 보세요. 옆
+        탭들이 이전 스냅샷을 계속 들고 있습니다. 다시 켜면 다음 수정부터 자동으로
+        최신 스냅샷을 받아옵니다.
       </p>
     </div>
   );
@@ -134,11 +142,13 @@ function TabView({
   label,
   items,
   stale,
+  nextLabel,
   onMutate,
 }: {
   label: string;
   items: Item[];
   stale: boolean;
+  nextLabel: string;
   onMutate: () => void;
 }) {
   return (
@@ -178,7 +188,7 @@ function TabView({
           onClick={onMutate}
           className="w-full h-8 rounded border border-border/60 font-mono text-[11px] text-muted hover:text-foreground hover:border-foreground/30 transition-colors"
         >
-          품목 A 수정
+          {nextLabel}
         </button>
       </div>
     </div>
@@ -199,7 +209,7 @@ function LogPane({ log }: { log: LogEntry[] }) {
       <ul className="space-y-1 max-h-40 overflow-y-auto">
         {log.length === 0 && (
           <li className="text-xs text-muted font-mono py-2 text-center">
-            상단 Tab 에서 "품목 A 수정" 을 눌러보세요.
+            상단 Tab 에서 버튼을 눌러보세요.
           </li>
         )}
         {log.map((e, i) => (
