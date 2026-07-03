@@ -209,6 +209,24 @@ export const projects: ShowcaseProject[] = [
     href: "/projects/modbus-playground",
     status: "live",
   },
+  {
+    slug: "event-bus-refactor",
+    title: "이벤트 버스 리팩토링 — 36개 화면을 한 줄 선언으로",
+    role: "Case Study · Frontend Architecture",
+    summary:
+      "iframe 기반 다중 탭 SaaS 에서 다른 탭 데이터가 갱신되지 않던 문제를 전역 ajaxSuccess 훅 + pub/sub 이벤트 버스로 정리. 하단에 재구현한 인터랙티브 데모 포함.",
+    stack: ["Case Study", "Frontend Architecture", "pub/sub", "iframe"],
+    href: "/projects/event-bus-refactor",
+  },
+  {
+    slug: "kukudocs-iframe",
+    title: "iframe 웹 에디터 저장 흐름 — postMessage 계약 설계",
+    role: "Case Study · Frontend Integration",
+    summary:
+      "3rd-party Kukudocs Editor 를 iframe 으로 임베드했을 때 편집 상태를 놓치지 않고 저장하기 위한 FORCE_COMMIT postMessage 프로토콜과 실패 경로 설계.",
+    stack: ["Case Study", "postMessage", "iframe", "React"],
+    href: "/projects/kukudocs-iframe",
+  },
 ];
 
 export const nav = [
