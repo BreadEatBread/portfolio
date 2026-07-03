@@ -200,6 +200,16 @@ export const projects: ShowcaseProject[] = [
     status: "live",
   },
   {
+    slug: "enterprise-grid",
+    title: "Enterprise Grid — 라이브러리 없는 10만 로우 데이터 테이블",
+    role: "Tool · Enterprise UI",
+    summary:
+      "라이브러리 없이 React 만으로 만든 데이터 그리드. 가상 스크롤, 정렬, 필터, 다중 선택, CSV 내보내기, 데스크탑급 키보드 네비까지. Ext JS·SlickGrid 로 몇 년 다뤄본 데이터 heavy UI 감각을 현대 React 스택에서 재현.",
+    stack: ["Next.js", "React", "TypeScript", "Virtual Scroll", "Keyboard UX"],
+    href: "/projects/enterprise-grid",
+    status: "live",
+  },
+  {
     slug: "modbus-playground",
     title: "Modbus Playground — 프레임 조립·파싱 도구",
     role: "Tool · Modbus RTU",
