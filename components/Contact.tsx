@@ -52,7 +52,7 @@ export function Contact() {
   }
 
   return (
-    <Section id="contact" eyebrow="05 · Contact" title="연락하기">
+    <Section id="contact" eyebrow="06 · Contact" title="연락하기">
       <div className="space-y-6">
         <p className="text-base sm:text-lg leading-relaxed text-muted">
           함께 만들고 싶은 제품이 있거나, 그냥 커피 한 잔 하고 싶으시다면

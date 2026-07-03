@@ -1,12 +1,19 @@
 import Link from "next/link";
-import { projects } from "@/lib/data";
+import type { ShowcaseProject } from "@/lib/data";
 import { Section } from "./Section";
 
-export function Projects() {
+type Props = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  items: ShowcaseProject[];
+};
+
+export function ShowcaseGrid({ id, eyebrow, title, items }: Props) {
   return (
-    <Section id="projects" eyebrow="03 · Projects" title="사이드 프로젝트">
+    <Section id={id} eyebrow={eyebrow} title={title}>
       <div className="space-y-4">
-        {projects.map((p) => (
+        {items.map((p) => (
           <Link
             key={p.slug}
             href={p.href}
