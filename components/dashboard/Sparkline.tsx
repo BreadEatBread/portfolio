@@ -14,7 +14,15 @@ export function Sparkline({
   fill = "currentColor",
 }: SparklineProps) {
   if (data.length < 2) {
-    return <svg width={width} height={height} aria-hidden />;
+    return (
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="none"
+        className="block w-full"
+        style={{ height: `${height}px` }}
+        aria-hidden
+      />
+    );
   }
 
   const min = Math.min(...data);
@@ -32,15 +40,14 @@ export function Sparkline({
     .map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`)
     .join(" ");
 
-  const areaPath =
-    `${path} L${width.toFixed(1)},${height} L0,${height} Z`;
+  const areaPath = `${path} L${width.toFixed(1)},${height} L0,${height} Z`;
 
   return (
     <svg
-      width={width}
-      height={height}
       viewBox={`0 0 ${width} ${height}`}
-      className="overflow-visible"
+      preserveAspectRatio="none"
+      className="block w-full overflow-visible"
+      style={{ height: `${height}px` }}
       aria-hidden
     >
       <path d={areaPath} fill={fill} opacity={0.08} />

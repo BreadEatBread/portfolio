@@ -166,7 +166,7 @@ export function CaseStudy() {
             }`}
           >
             <div className="grid gap-8 md:grid-cols-[180px_1fr]">
-              <div>
+              <div className="min-w-0">
                 <p className="font-mono text-[10px] uppercase tracking-widest text-muted mb-2">
                   {b.eyebrow}
                 </p>
@@ -174,7 +174,7 @@ export function CaseStudy() {
                   {b.title}
                 </h4>
               </div>
-              <div className="space-y-4 text-muted leading-relaxed">
+              <div className="space-y-4 text-muted leading-relaxed min-w-0">
                 {b.body}
               </div>
             </div>
@@ -217,13 +217,14 @@ function Tradeoff({
 
 function ArchDiagram() {
   return (
-    <div className="my-4 rounded border border-border/60 bg-background/40 p-4 overflow-x-auto">
-      <svg
-        viewBox="0 0 640 260"
-        className="w-full min-w-[560px] text-muted"
-        role="img"
-        aria-label="Data flow diagram"
-      >
+    <div className="my-4 -mx-6 sm:-mx-8 md:mx-0 overflow-x-auto">
+      <div className="min-w-[560px] mx-6 sm:mx-8 md:mx-0 rounded border border-border/60 bg-background/40 p-4">
+        <svg
+          viewBox="0 0 640 260"
+          className="w-full text-muted"
+          role="img"
+          aria-label="Data flow diagram"
+        >
         <defs>
           <marker
             id="arrow"
@@ -343,7 +344,8 @@ function ArchDiagram() {
             펌웨어 · 퍼블리셔 · 브라우저 세 곳이 같은 스키마를 공유
           </text>
         </g>
-      </svg>
+        </svg>
+      </div>
     </div>
   );
 }
