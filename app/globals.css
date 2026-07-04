@@ -50,6 +50,12 @@ body {
   outline-offset: 2px;
 }
 
+/* Command palette manages its own focus signals (caret + selection bg). */
+[role="dialog"] :focus-visible,
+[role="dialog"]:focus-visible {
+  outline: none;
+}
+
 .skip-link {
   position: absolute;
   top: 0;
