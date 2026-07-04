@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type {
   DashboardEvent,
+  DeviceState,
   DeviceView,
 } from "@/lib/dashboard/types";
 
-export type StreamStatus = "idle" | "connecting" | "connected" | "reconnecting" | "error";
+export type StreamStatus =
+  | "idle"
+  | "connecting"
+  | "connected"
+  | "reconnecting"
+  | "error";
 
 export type DashboardStreamSnapshot = {
   devices: DeviceView[];
@@ -14,6 +20,12 @@ export type DashboardStreamSnapshot = {
   tickCount: number;
   status: StreamStatus;
   lastMessageAt: number | null;
+  sessionId: string | null;
+};
+
+export type DashboardStreamControls = {
+  forceState: (deviceId: string, state: DeviceState) => Promise<void>;
+  reset: () => Promise<void>;
 };
 
 const initial: DashboardStreamSnapshot = {
@@ -22,10 +34,21 @@ const initial: DashboardStreamSnapshot = {
   tickCount: 0,
   status: "idle",
   lastMessageAt: null,
+  sessionId: null,
 };
 
-export function useDashboardStream(enabled: boolean): DashboardStreamSnapshot {
+function generateSessionId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  return `sess-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+export function useDashboardStream(
+  enabled: boolean,
+): DashboardStreamSnapshot & DashboardStreamControls {
   const [snapshot, setSnapshot] = useState<DashboardStreamSnapshot>(initial);
+  const sessionRef = useRef<string | null>(null);
   const tickRef = useRef(0);
 
   useEffect(() => {
@@ -35,12 +58,17 @@ export function useDashboardStream(enabled: boolean): DashboardStreamSnapshot {
       return;
     }
 
-    setSnapshot((s) => ({ ...s, status: "connecting" }));
+    if (!sessionRef.current) sessionRef.current = generateSessionId();
+    const sessionId = sessionRef.current;
 
-    const es = new EventSource("/api/dashboard/stream");
+    setSnapshot((s) => ({ ...s, status: "connecting", sessionId }));
+
+    const es = new EventSource(
+      `/api/dashboard/stream?session=${encodeURIComponent(sessionId)}`,
+    );
 
     es.onopen = () => {
-      setSnapshot((s) => ({ ...s, status: "connected" }));
+      setSnapshot((s) => ({ ...s, status: "connected", sessionId }));
     };
 
     es.addEventListener("tick", (evt) => {
@@ -57,6 +85,7 @@ export function useDashboardStream(enabled: boolean): DashboardStreamSnapshot {
           tickCount: tickRef.current,
           status: "connected",
           lastMessageAt: data.ts,
+          sessionId,
         });
       } catch {
         // ignore malformed frame
@@ -68,7 +97,7 @@ export function useDashboardStream(enabled: boolean): DashboardStreamSnapshot {
         ...s,
         status: s.status === "connected" ? "reconnecting" : "error",
       }));
-      // EventSource will retry automatically
+      // EventSource retries automatically
     };
 
     return () => {
@@ -76,5 +105,37 @@ export function useDashboardStream(enabled: boolean): DashboardStreamSnapshot {
     };
   }, [enabled]);
 
-  return snapshot;
+  const post = useCallback(async (body: unknown) => {
+    if (!sessionRef.current) return;
+    try {
+      await fetch("/api/dashboard/stream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch {
+      // swallow — client would already see the connection status
+    }
+  }, []);
+
+  const forceState = useCallback(
+    (deviceId: string, state: DeviceState) =>
+      post({
+        action: "force-state",
+        session: sessionRef.current,
+        deviceId,
+        state,
+      }),
+    [post],
+  );
+
+  const reset = useCallback(
+    () => post({ action: "reset", session: sessionRef.current }),
+    [post],
+  );
+
+  return useMemo(
+    () => ({ ...snapshot, forceState, reset }),
+    [snapshot, forceState, reset],
+  );
 }

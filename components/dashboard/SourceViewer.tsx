@@ -4,6 +4,7 @@ import { SourceTabs, type SourceFile } from "./SourceTabs";
 
 const targets: { path: string; language: string }[] = [
   { path: "app/api/dashboard/stream/route.ts", language: "TypeScript · Edge" },
+  { path: "lib/dashboard/session-store.ts", language: "TypeScript" },
   { path: "hooks/useDashboardStream.ts", language: "TypeScript · React" },
   { path: "arduino/factory-node.ino", language: "C++ / Arduino" },
   { path: "scripts/mqtt-publisher.mjs", language: "Node.js" },

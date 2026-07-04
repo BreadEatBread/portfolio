@@ -64,8 +64,16 @@ export function Dashboard() {
             <PowerChart devices={view.devices} />
             <EventLog events={view.events} />
           </div>
-          {!isServer && (
+          {isServer ? (
             <ControlPanel
+              variant="server"
+              devices={view.devices}
+              onForceState={stream.forceState}
+              onReset={stream.reset}
+            />
+          ) : (
+            <ControlPanel
+              variant="client"
               devices={view.devices}
               paused={client.paused}
               onPauseToggle={() => client.setPaused(!client.paused)}

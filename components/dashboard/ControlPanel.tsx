@@ -5,12 +5,13 @@ import type { DeviceState, DeviceView } from "@/lib/dashboard/types";
 
 type Props = {
   devices: DeviceView[];
-  paused: boolean;
-  onPauseToggle: () => void;
-  speed: number;
-  onSpeedChange: (v: number) => void;
   onForceState: (id: string, s: DeviceState) => void;
   onReset: () => void;
+  variant?: "client" | "server";
+  paused?: boolean;
+  onPauseToggle?: () => void;
+  speed?: number;
+  onSpeedChange?: (v: number) => void;
 };
 
 const SPEEDS = [0.5, 1, 2, 4];
@@ -25,57 +26,78 @@ const stateOptions: { value: DeviceState; label: string; className: string }[] =
 
 export function ControlPanel({
   devices,
+  onForceState,
+  onReset,
+  variant = "client",
   paused,
   onPauseToggle,
   speed,
   onSpeedChange,
-  onForceState,
-  onReset,
 }: Props) {
   const findState = (id: string) =>
     devices.find((d) => d.id === id)?.state ?? "running";
+
+  const showPace = variant === "client" && onPauseToggle && onSpeedChange;
+  const eyebrow =
+    variant === "server" ? "Control · via /api/dashboard/control" : "Control · Try it";
+  const title =
+    variant === "server"
+      ? "서버 시뮬레이터 조작"
+      : "시뮬레이터 조작";
+  const subtitle =
+    variant === "server"
+      ? "— POST 로 서버 상태를 바꿉니다"
+      : "— 직접 만져보세요";
 
   return (
     <div className="rounded-lg border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border px-4 py-3 gap-3 flex-wrap">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted mb-0.5">
-            Control · Try it
+            {eyebrow}
           </p>
           <h3 className="text-sm font-medium text-foreground">
-            시뮬레이터 조작 <span className="text-muted font-normal">— 직접 만져보세요</span>
+            {title}{" "}
+            <span className="text-muted font-normal">{subtitle}</span>
           </h3>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <button
-            onClick={onPauseToggle}
-            className={`inline-flex items-center gap-2 rounded-full border px-3.5 h-8 font-mono text-[11px] transition-colors ${
-              paused
-                ? "border-amber-500/30 bg-amber-500/10 text-amber-400"
-                : "border-border text-muted hover:text-foreground hover:border-foreground/30"
-            }`}
-          >
-            <span aria-hidden>{paused ? "▶" : "❚❚"}</span>
-            {paused ? "재생" : "일시정지"}
-          </button>
-
-          <div className="inline-flex items-center rounded-full border border-border overflow-hidden">
-            {SPEEDS.map((s) => (
+          {showPace && (
+            <>
               <button
-                key={s}
-                onClick={() => onSpeedChange(s)}
-                className={`px-3 h-8 font-mono text-[11px] transition-colors ${
-                  s === speed
-                    ? "bg-foreground text-background"
-                    : "text-muted hover:text-foreground"
+                type="button"
+                onClick={onPauseToggle}
+                className={`inline-flex items-center gap-2 rounded-full border px-3.5 h-8 font-mono text-[11px] transition-colors ${
+                  paused
+                    ? "border-amber-500/30 bg-amber-500/10 text-amber-400"
+                    : "border-border text-muted hover:text-foreground hover:border-foreground/30"
                 }`}
               >
-                {s}x
+                <span aria-hidden>{paused ? "▶" : "❚❚"}</span>
+                {paused ? "재생" : "일시정지"}
               </button>
-            ))}
-          </div>
+
+              <div className="inline-flex items-center rounded-full border border-border overflow-hidden">
+                {SPEEDS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => onSpeedChange!(s)}
+                    className={`px-3 h-8 font-mono text-[11px] transition-colors ${
+                      s === speed
+                        ? "bg-foreground text-background"
+                        : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    {s}x
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           <button
+            type="button"
             onClick={onReset}
             className="inline-flex items-center gap-1.5 rounded-full border border-border px-3.5 h-8 font-mono text-[11px] text-muted hover:text-foreground hover:border-foreground/30 transition-colors"
           >
@@ -104,6 +126,7 @@ export function ControlPanel({
                   {stateOptions.map((opt) => (
                     <button
                       key={opt.value}
+                      type="button"
                       onClick={() => onForceState(d.id, opt.value)}
                       title={`${d.name} → ${opt.label}`}
                       className={`h-7 min-w-[36px] px-2 rounded font-mono text-[10px] border transition-colors ${
