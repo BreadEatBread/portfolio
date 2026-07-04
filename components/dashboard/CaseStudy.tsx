@@ -117,7 +117,48 @@ const blocks: Block[] = [
     ),
   },
   {
-    eyebrow: "05 · Learnings",
+    eyebrow: "05 · Client → Server",
+    title: "브라우저 시뮬레이터에서 서버 스트림으로",
+    body: (
+      <>
+        <p>
+          처음 버전은 시뮬레이터가 <strong className="text-foreground font-medium">브라우저 안에서 돌았다</strong>.
+          정적 배포만으로 즉시 라이브 데모가 되니 초기엔 이상적. 하지만 결정적 단점 하나 —
+          <em> 방문자마다 자기 우주가 열린다</em>. &quot;저 사람이 본 알람&quot; 과 &quot;내가 보는 알람&quot; 이
+          다르니 공유·재현이 불가능하고, 실제 산업 시스템의 &quot;서버가 진실&quot; 을 시연할 수 없었다.
+        </p>
+        <p>
+          그래서 시뮬레이터를 그대로 두고{" "}
+          <code className="font-mono text-xs text-foreground">/api/dashboard/stream</code>{" "}
+          Edge 라우트를 하나 더 붙였다. Vercel Edge Runtime 위에서{" "}
+          <code className="font-mono text-xs text-foreground">ReadableStream</code>{" "}
+          으로 <strong className="text-foreground font-medium">Server-Sent Events</strong> 를
+          내려보내고, 브라우저는{" "}
+          <code className="font-mono text-xs text-foreground">EventSource</code>{" "}
+          로 구독한다. 상단 토글로 두 소스를 왔다갔다 하며 차이를 눈으로 느낄 수 있다.
+        </p>
+        <div className="space-y-6">
+          <Tradeoff
+            decision="Edge Runtime + SSE (WebSocket 대신)"
+            pro="Vercel Serverless 는 WebSocket 을 잘 못 다룬다. SSE 는 단방향이라 브로커 없이 함수 하나로 스트림 유지. EventSource 는 자동 재연결까지 무료."
+            con="양방향이 필요하면 결국 WebSocket 인프라(Ably·Pusher 등) 로 옮겨야 함. 지금은 관제 조회용이라 단방향으로 충분."
+          />
+          <Tradeoff
+            decision="서버 시뮬레이터는 커넥션당 새로 생성"
+            pro="세션 간 격리가 자연스럽고 서버 상태가 없어 배포·스케일 관리 쉬움."
+            con="여러 브라우저가 동일한 알람을 봐야 하는 진짜 관제 시나리오는 아님. 공용 관제로 확장하려면 KV/DB 로 옮겨 단일 시뮬레이터를 pub/sub 로 팬아웃 필요."
+          />
+          <Tradeoff
+            decision="Force State 같은 제어는 클라이언트 모드에서만 노출"
+            pro="「서버 진실을 관찰하는 관제」 와 「직접 조작하는 놀이터」 를 UI 로 명확히 분리. 방문자가 지금 뭘 보고 있는지 헷갈리지 않음."
+            con="서버 모드에서도 조작하고 싶으면 별도 POST 엔드포인트와 세션 매핑이 필요. 후속 작업."
+          />
+        </div>
+      </>
+    ),
+  },
+  {
+    eyebrow: "06 · Learnings",
     title: "만들면서 확인한 것",
     body: (
       <ul className="space-y-3 list-none">
@@ -127,8 +168,8 @@ const blocks: Block[] = [
             v: "데이터는 500ms마다 갱신되지만 각 카드가 개별 구독하도록 나누지 않으면 리스트 전체가 리렌더한다. 처음엔 단일 상태로 시작하고, 병목이 실측되면 세분화하는 편이 낫다.",
           },
           {
-            k: "MQTT 는 브로커가 아니라 스키마 문제다.",
-            v: "브로커/브라우저/펌웨어 세 곳이 같은 JSON 을 받아 해석해야 한다. topic 규칙과 필드명을 먼저 못박아 두면 나머지 구현은 그저 옮기는 일이 된다.",
+            k: "MQTT/SSE 는 브로커가 아니라 스키마 문제다.",
+            v: "브로커·서버·브라우저·펌웨어 네 곳이 같은 JSON 을 받아 해석해야 한다. topic·이벤트 이름·필드명을 먼저 못박아 두면 나머지 구현은 그저 옮기는 일이 된다.",
           },
           {
             k: "코드를 보여주는 것 자체가 스토리다.",

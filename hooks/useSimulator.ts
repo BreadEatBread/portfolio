@@ -31,7 +31,9 @@ const initial: SimulatorSnapshot = {
 
 const BASE_INTERVAL_MS = 500;
 
-export function useSimulator(): SimulatorSnapshot & SimulatorControls {
+export function useSimulator(
+  enabled: boolean = true,
+): SimulatorSnapshot & SimulatorControls {
   const [snapshot, setSnapshot] = useState<SimulatorSnapshot>(initial);
   const [paused, setPaused] = useState(false);
   const [speed, setSpeed] = useState(1);
@@ -42,6 +44,7 @@ export function useSimulator(): SimulatorSnapshot & SimulatorControls {
   pausedRef.current = paused;
 
   useEffect(() => {
+    if (!enabled) return;
     if (!simRef.current) simRef.current = createSimulator();
 
     const emit = () => {
@@ -55,7 +58,7 @@ export function useSimulator(): SimulatorSnapshot & SimulatorControls {
     emit();
     const id = window.setInterval(emit, BASE_INTERVAL_MS / speed);
     return () => window.clearInterval(id);
-  }, [speed]);
+  }, [enabled, speed]);
 
   const forceState = useCallback((deviceId: string, next: DeviceState) => {
     simRef.current?.forceState(deviceId, next);
