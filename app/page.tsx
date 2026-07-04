@@ -1,7 +1,6 @@
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Experience } from "@/components/Experience";
-import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Nav } from "@/components/Nav";
 import { ScrollTargetHandler } from "@/components/ScrollTargetHandler";
@@ -33,7 +32,6 @@ export default function Home() {
         <Experience />
         <Contact />
       </main>
-      <Footer />
     </>
   );
 }

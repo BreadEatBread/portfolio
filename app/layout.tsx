@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { BackToTop } from "@/components/BackToTop";
 import { CommandPalette } from "@/components/CommandPalette";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -43,6 +44,7 @@ export default function RootLayout({
           본문으로 건너뛰기
         </a>
         {children}
+        <Footer />
         <BackToTop />
         <CommandPalette />
         <Analytics />
