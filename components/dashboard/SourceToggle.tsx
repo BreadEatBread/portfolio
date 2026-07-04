@@ -32,7 +32,7 @@ export function SourceToggle({ source, onChange, status }: Props) {
   return (
     <div className="rounded-lg border border-border bg-card">
       <div className="flex flex-wrap items-center gap-4 p-4">
-        <div>
+        <div className="min-w-[200px]">
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted mb-1">
             Data source
           </p>
