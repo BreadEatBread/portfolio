@@ -86,6 +86,10 @@ export function CommandPalette() {
         action: () => go("/#experience") },
       { id: "nav-contact", title: "Contact · 연락하기", category: "이동", keywords: "연락처 이메일 contact",
         action: () => go("/#contact") },
+      { id: "nav-blog", title: "Blog · 글", category: "이동", keywords: "블로그 blog 글",
+        action: () => router.push("/blog") },
+      { id: "nav-now", title: "Now · 요즘 뭐하고 있냐면", category: "이동", keywords: "now 요즘 현재",
+        action: () => router.push("/now") },
 
       // Projects
       { id: "p-factory", title: "Factory Live", hint: "IoT 실시간 대시보드 · Server SSE + Client",
