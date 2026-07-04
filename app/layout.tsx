@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { CommandPalette } from "@/components/CommandPalette";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -41,6 +42,7 @@ export default function RootLayout({
           본문으로 건너뛰기
         </a>
         {children}
+        <CommandPalette />
         <Analytics />
         <SpeedInsights />
       </body>
