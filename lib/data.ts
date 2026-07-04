@@ -210,6 +210,16 @@ export const projects: ShowcaseProject[] = [
     status: "live",
   },
   {
+    slug: "ratelimit-sandbox",
+    title: "Rate Limit Sandbox — 세 알고리즘 실물 비교",
+    role: "Tool · Backend",
+    summary:
+      "Edge Runtime 위에서 돌아가는 Fixed Window · Sliding Window · Token Bucket 세 rate limit 알고리즘을 눈으로 굴려보는 도구. 표준 429 응답 헤더(Retry-After · X-RateLimit-Remaining) 실전 예시.",
+    stack: ["Next.js", "Edge Runtime", "TypeScript", "Rate Limiting"],
+    href: "/projects/ratelimit-sandbox",
+    status: "live",
+  },
+  {
     slug: "modbus-playground",
     title: "Modbus Playground — 프레임 조립·파싱 도구",
     role: "Tool · Modbus RTU",
