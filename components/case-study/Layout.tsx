@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { BackToPortfolioLink } from "@/components/BackToPortfolioLink";
 
 type Props = {
   eyebrow: string;
@@ -20,12 +20,7 @@ export function CaseStudyLayout({
     <main id="main" className="flex-1 px-6 py-10 sm:py-14">
       <div className="mx-auto max-w-4xl space-y-12">
         <header className="space-y-3">
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-1 text-xs text-muted hover:text-foreground transition-colors"
-          >
-            <span aria-hidden>←</span> 포트폴리오로
-          </Link>
+          <BackToPortfolioLink />
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
             {eyebrow}
           </p>

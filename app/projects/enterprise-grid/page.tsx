@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { BackToPortfolioLink } from "@/components/BackToPortfolioLink";
 import { EnterpriseGridCaseStudy } from "@/components/enterprise-grid/CaseStudy";
 import { Grid } from "@/components/enterprise-grid/Grid";
 
@@ -14,12 +14,7 @@ export default function EnterpriseGridPage() {
     <main id="main" className="flex-1 px-6 py-10 sm:py-14">
       <div className="mx-auto max-w-6xl space-y-12">
         <header className="space-y-3">
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-1 text-xs text-muted hover:text-foreground transition-colors"
-          >
-            <span aria-hidden>←</span> 포트폴리오로
-          </Link>
+          <BackToPortfolioLink />
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
             Tool · Enterprise UI
           </p>

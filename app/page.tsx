@@ -4,6 +4,7 @@ import { Experience } from "@/components/Experience";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Nav } from "@/components/Nav";
+import { ScrollTargetHandler } from "@/components/ScrollTargetHandler";
 import { ShowcaseGrid } from "@/components/ShowcaseGrid";
 import { Skills } from "@/components/Skills";
 import { caseStudies, projects } from "@/lib/data";
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <>
       <Nav />
+      <ScrollTargetHandler />
       <main id="main" className="flex-1">
         <Hero />
         <About />

@@ -1,4 +1,7 @@
+"use client";
+
 import { profile } from "@/lib/data";
+import { scrollToId } from "@/lib/scroll-nav";
 
 export function Hero() {
   return (
@@ -22,19 +25,21 @@ export function Hero() {
             {profile.tagline}
           </p>
           <div className="mt-12 flex items-center gap-3">
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={() => scrollToId("projects")}
               className="inline-flex items-center gap-2 rounded-full bg-foreground text-background px-5 h-11 text-sm font-medium hover:opacity-90 transition-opacity"
             >
-              Get in touch
+              프로젝트 보기
               <span aria-hidden>→</span>
-            </a>
-            <a
-              href="#experience"
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToId("experience")}
               className="inline-flex items-center rounded-full border border-border px-5 h-11 text-sm font-medium text-muted hover:text-foreground hover:border-foreground/30 transition-colors"
             >
               경력 보기
-            </a>
+            </button>
           </div>
         </div>
       </div>

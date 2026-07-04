@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BackToPortfolioLink } from "@/components/BackToPortfolioLink";
 
 type BadgeTone = "emerald" | "amber" | "rose";
 
@@ -67,12 +67,9 @@ export function DashboardHeader({
   return (
     <div className="flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4">
       <div>
-        <Link
-          href="/#projects"
-          className="inline-flex items-center gap-1 text-xs text-muted hover:text-foreground transition-colors mb-2"
-        >
-          <span aria-hidden>←</span> 포트폴리오로
-        </Link>
+        <div className="mb-2">
+          <BackToPortfolioLink />
+        </div>
         <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
           Case study · IoT Realtime
         </p>

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { profile } from "@/lib/data";
+import { jumpToHomeSection, scrollToTop } from "@/lib/scroll-nav";
 
 type Command = {
   id: string;
@@ -47,10 +48,21 @@ export function CommandPalette() {
 
   const go = useCallback(
     (href: string) => {
+      // Anchor 링크(#foo) 는 URL 을 더럽히지 않고 스크롤로 처리
+      if (href.startsWith("#") || href.startsWith("/#")) {
+        jumpToHomeSection(href, (p) => router.push(p));
+        return;
+      }
       router.push(href);
     },
     [router],
   );
+
+  const goTop = useCallback(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.pathname === "/") scrollToTop();
+    else router.push("/");
+  }, [router]);
 
   const flashToast = useCallback((text: string) => {
     setToast(text);
@@ -60,8 +72,8 @@ export function CommandPalette() {
   const commands = useMemo<Command[]>(() => {
     return [
       // Navigation
-      { id: "nav-home", title: "홈으로", category: "이동", keywords: "top home about",
-        action: () => go("/") },
+      { id: "nav-home", title: "홈으로", category: "이동", keywords: "top home 홈 처음",
+        action: goTop },
       { id: "nav-about", title: "About · 개발자 김정웅", category: "이동", keywords: "소개 자기소개 introduction",
         action: () => go("/#about") },
       { id: "nav-skills", title: "Skills · 사용하는 도구", category: "이동", keywords: "스킬 스택 기술",
@@ -123,7 +135,7 @@ export function CommandPalette() {
         },
       },
     ];
-  }, [go, flashToast]);
+  }, [go, goTop, flashToast]);
 
   const filtered = useMemo(
     () => commands.filter((c) => matches(c, query)),

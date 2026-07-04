@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { BackToPortfolioLink } from "@/components/BackToPortfolioLink";
 import { BuilderState, FrameBuilder } from "./FrameBuilder";
 import { FrameDecoder } from "./FrameDecoder";
 import { PresetLibrary } from "./PresetLibrary";
@@ -21,12 +21,9 @@ export function Playground() {
   return (
     <div className="space-y-12">
       <div>
-        <Link
-          href="/#projects"
-          className="inline-flex items-center gap-1 text-xs text-muted hover:text-foreground transition-colors mb-2"
-        >
-          <span aria-hidden>←</span> 포트폴리오로
-        </Link>
+        <div className="mb-2">
+          <BackToPortfolioLink />
+        </div>
         <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
           Tool · Modbus RTU
         </p>

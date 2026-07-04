@@ -1,12 +1,24 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { openCommandPalette } from "@/components/CommandPalette";
 import { nav, profile } from "@/lib/data";
+import { jumpToHomeSection, scrollToTop } from "@/lib/scroll-nav";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const goTo = (href: string) => {
+    setOpen(false);
+    if (href === "#top" || href === "/") {
+      if (window.location.pathname === "/") scrollToTop();
+      else router.push("/");
+      return;
+    }
+    jumpToHomeSection(href, (p) => router.push(p));
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -20,27 +32,28 @@ export function Nav() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/60 border-b border-border">
       <div className="mx-auto max-w-5xl px-6 h-14 flex items-center justify-between">
-        <Link
-          href="#top"
-          onClick={() => setOpen(false)}
+        <button
+          type="button"
+          onClick={() => goTo("#top")}
           className="text-sm font-medium tracking-tight text-foreground hover:text-muted transition-colors"
         >
           {profile.name}
           <span className="hidden sm:inline text-muted ml-2 font-mono text-xs">
             /{profile.nameEn}
           </span>
-        </Link>
+        </button>
 
         <div className="flex items-center gap-4">
           <nav className="hidden md:flex items-center gap-6 text-sm text-muted">
             {nav.map((item) => (
-              <a
+              <button
                 key={item.href}
-                href={item.href}
+                type="button"
+                onClick={() => goTo(item.href)}
                 className="hover:text-foreground transition-colors"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
           </nav>
 
@@ -126,11 +139,11 @@ export function Nav() {
             </span>
           </button>
           {nav.map((item, i) => (
-            <a
+            <button
               key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className={`flex items-center justify-between py-3 text-sm text-foreground hover:text-muted transition-colors ${
+              type="button"
+              onClick={() => goTo(item.href)}
+              className={`flex items-center justify-between py-3 text-sm text-foreground hover:text-muted transition-colors text-left ${
                 i < nav.length - 1 ? "border-b border-border/60" : ""
               }`}
             >
@@ -141,7 +154,7 @@ export function Nav() {
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-            </a>
+            </button>
           ))}
         </nav>
       </div>
