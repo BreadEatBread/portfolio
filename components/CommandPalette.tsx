@@ -262,7 +262,7 @@ export function CommandPalette() {
             autoCorrect="off"
             autoCapitalize="off"
             placeholder="어디로 갈까요? (섹션·프로젝트·액션 검색)"
-            className="flex-1 h-12 bg-transparent text-sm text-foreground placeholder:text-muted focus:outline-none"
+            className="flex-1 h-12 bg-transparent text-sm text-foreground placeholder:text-muted focus:outline-none focus-visible:outline-none"
           />
           <kbd className="hidden sm:inline-flex items-center rounded border border-border px-2 h-6 font-mono text-xs text-muted">
             esc
@@ -294,7 +294,7 @@ export function CommandPalette() {
                             if (cmd.category !== "액션") setOpen(false);
                           }}
                           onMouseEnter={() => setSelectedIdx(idx)}
-                          className={`w-full text-left px-4 py-2.5 flex items-center gap-3 transition-colors ${
+                          className={`w-full text-left px-4 py-2.5 flex items-center gap-3 transition-colors focus:outline-none focus-visible:outline-none ${
                             active
                               ? "bg-foreground/[0.08]"
                               : "hover:bg-foreground/[0.04]"
