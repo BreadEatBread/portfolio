@@ -48,9 +48,9 @@ export function Nav() {
             type="button"
             onClick={openCommandPalette}
             aria-label="커맨드 팔레트 열기"
-            className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-border/60 px-2.5 h-7 font-mono text-[11px] text-muted hover:text-foreground hover:border-foreground/30 transition-colors"
+            className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 h-8 font-mono text-xs text-muted hover:text-foreground hover:border-foreground/30 transition-colors"
           >
-            <span aria-hidden>⌘</span>
+            <span aria-hidden className="text-sm leading-none">⌘</span>
             <span>K</span>
           </button>
 

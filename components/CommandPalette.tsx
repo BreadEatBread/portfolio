@@ -246,7 +246,7 @@ export function CommandPalette() {
 
       <div className="relative w-full max-w-xl rounded-xl border border-border bg-card shadow-2xl overflow-hidden">
         <div className="flex items-center gap-3 border-b border-border px-4">
-          <span aria-hidden className="font-mono text-[11px] text-muted">
+          <span aria-hidden className="font-mono text-xs text-muted">
             ⌘K
           </span>
           <input
@@ -264,7 +264,7 @@ export function CommandPalette() {
             placeholder="어디로 갈까요? (섹션·프로젝트·액션 검색)"
             className="flex-1 h-12 bg-transparent text-sm text-foreground placeholder:text-muted focus:outline-none"
           />
-          <kbd className="hidden sm:inline-block rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted">
+          <kbd className="hidden sm:inline-flex items-center rounded border border-border px-2 h-6 font-mono text-xs text-muted">
             esc
           </kbd>
         </div>
@@ -321,7 +321,7 @@ export function CommandPalette() {
                             )}
                           </span>
                           {active && (
-                            <kbd className="hidden sm:inline-block font-mono text-[10px] text-muted">
+                            <kbd className="hidden sm:inline-flex items-center rounded border border-border px-1.5 h-5 font-mono text-xs text-muted">
                               ↵
                             </kbd>
                           )}
@@ -335,18 +335,18 @@ export function CommandPalette() {
           )}
         </div>
 
-        <div className="border-t border-border px-4 py-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[10px] text-muted">
-          <span className="flex items-center gap-1">
-            <kbd className="rounded border border-border px-1">↑</kbd>
-            <kbd className="rounded border border-border px-1">↓</kbd>
+        <div className="border-t border-border px-4 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-xs text-muted">
+          <span className="flex items-center gap-1.5">
+            <kbd className="inline-flex items-center rounded border border-border px-1.5 h-5">↑</kbd>
+            <kbd className="inline-flex items-center rounded border border-border px-1.5 h-5">↓</kbd>
             이동
           </span>
-          <span className="flex items-center gap-1">
-            <kbd className="rounded border border-border px-1">↵</kbd>
+          <span className="flex items-center gap-1.5">
+            <kbd className="inline-flex items-center rounded border border-border px-1.5 h-5">↵</kbd>
             실행
           </span>
-          <span className="flex items-center gap-1">
-            <kbd className="rounded border border-border px-1">esc</kbd>
+          <span className="flex items-center gap-1.5">
+            <kbd className="inline-flex items-center rounded border border-border px-1.5 h-5">esc</kbd>
             닫기
           </span>
           <span className="ml-auto">{filtered.length} 항목</span>
