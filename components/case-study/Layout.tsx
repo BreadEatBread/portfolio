@@ -83,7 +83,7 @@ export function TradeoffCard({ decision, pro, con }: TradeoffProps) {
         </div>
         <div>
           <p className="font-mono text-[10px] uppercase tracking-widest text-amber-400 mb-1">
-            놓은 것
+            감수한 것
           </p>
           <p className="text-muted">{con}</p>
         </div>
